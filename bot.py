@@ -15,9 +15,10 @@ def welcome(message):
     # keyboard
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     item1 = types.KeyboardButton("🎲 Бросить кубик")
-    item2 = types.KeyboardButton("😊 Как дела?")
+    item2 = types.KeyboardButton("🎲🎲 Бросить 2 кубика")
+    item3 = types.KeyboardButton("😊 Как дела?")
 
-    markup.add(item1, item2)
+    markup.add(item1, item2, item3)
 
     bot.send_message(message.chat.id,
                      "Добро пожаловать, {0.first_name}!\nЯ - <b>{1.first_name}</b>, бот, созданный DmAlFat в качестве первого эксперимента.".format(
@@ -30,6 +31,8 @@ def lalala(message):
     if message.chat.type == 'private':
         if message.text == '🎲 Бросить кубик':
             bot.send_message(message.chat.id, str(random.randint(1, 6)))
+        elif message.text == '🎲🎲 Бросить 2 кубика':
+            bot.send_message(message.chat.id, str(random.randint(2, 12)))
         elif message.text == '😊 Как дела?':
 
             markup = types.InlineKeyboardMarkup(row_width=2)
@@ -40,7 +43,7 @@ def lalala(message):
 
             bot.send_message(message.chat.id, 'Отлично, сам как?', reply_markup=markup)
         else:
-            bot.send_message(message.chat.id, 'Я не знаю, что ответить 😢')
+            bot.send_message(message.chat.id, '{｡^◕‿◕^｡} \nЯ пока не умею обрабатывать подобные запросы, попробуй что-то другое...')
 
 
 @bot.callback_query_handler(func=lambda call: True)
@@ -48,9 +51,9 @@ def callback_inline(call):
     try:
         if call.message:
             if call.data == 'good':
-                bot.send_message(call.message.chat.id, 'Вот и славно 😊')
+                bot.send_message(call.message.chat.id, 'Здорово! Так держать!\n☃')
             elif call.data == 'bad':
-                bot.send_message(call.message.chat.id, 'Пройдёт... 😢')
+                bot.send_message(call.message.chat.id, 'Не расстраивайся, это пройдёт.\n⌛')
 
             # remove inline buttons
             bot.edit_message_text(chat_id=call.message.chat.id, message_id=call.message.message_id, text="😊 Как дела?",
